@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cayman Synth</title>
+        <!--  Beep components  -->
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'beep/Beep.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'beep/Beep.Trigger.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'beep/Beep.Instrument.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'beep/Beep.editor.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'CSS/demo.css' %}">
+        
+        <script charset="utf-8" src="{% static 'beep/Beep.js' %}"></script>
+        <script charset="utf-8" src="{% static 'beep/Beep.Note.js' %}"></script>		
+        <script charset="utf-8" src="{% static 'beep/Beep.Voice.js' %}"></script>
+        <script charset="utf-8" src="{% static 'beep/Beep.Sample.js' %}"></script>
+        <script charset="utf-8" src="{% static 'beep/Beep.Trigger.js' %}"></script>
+        <script charset="utf-8" src="{% static 'beep/Beep.Instrument.js' %}"></script>
+        <!-- <script charset="utf-8" src="beep/Beep.editor.js"></script> -->
+        <!-- personal code -->
+        <script charset="utf-8">
+            var allNotes= ['4C','4C#','4D','4D#','4E','4F','4F#','4G','4G#','4A','4A#','4B','5C','5C#','5D','5D#','5E','5F']
+            // check out onChange for the inputs
+            document.addEventListener("DOMContentLoaded", function(){
+                window.synth = new Beep.Instrument().caymanSynthExtended() //added this build class to beep.instrument.js
+                window.synth.applyVoices( function(){ this.voices.push( 
+
+                    new Beep.Voice( this.note.hertz * parseFloat({{octave1}}), this.audioContext )
+                        .setOscillatorType( '{{oscillator1}}' )
+                        .setAttackGain( {{attackGain1}} )        //  0 = No gain. 1 = Full gain.
+                        .setAttackDuration( {{attackDur1}} )    //  Attack ramp up duration in seconds.
+                        .setDecayDuration({{decayDur1}} )      //  Decay ramp down duration in seconds.
+                        .setSustainGain( {{sustainGain1}} )        //  Sustain gain level; percent of attackGain.
+                        .setSustainDuration( {{sustainDur1}} )      //  Sustain duration in seconds -- normally Infinity.
+                        .setReleaseDuration( {{release1}} ),
+                
+                    new Beep.Voice( this.note.hertz * parseFloat({{octave2}}), this.audioContext )
+                        .setOscillatorType( '{{oscillator2}}' )
+                        .setAttackGain( {{attackGain2}} )        //  0 = No gain. 1 = Full gain.
+                        .setAttackDuration( {{attackDur2}} )    //  Attack ramp up duration in seconds.
+                        .setDecayDuration({{decayDur2}} )      //  Decay ramp down duration in seconds.
+                        .setSustainGain( {{sustainGain2}} )        //  Sustain gain level; percent of attackGain.
+                        .setSustainDuration( {{sustainDur2}} )      //  Sustain duration in seconds -- normally Infinity.
+                        .setReleaseDuration( {{release2}} ),
+                    // new Beep.Voice( this.note, this.audioContext )
+                    //     .setOscillatorType( 'sine' )
+                    //     .setAttackGain( 0.2 )        //  0 = No gain. 1 = Full gain.
+                    //     .setAttackDuration( 0.08 )    //  Attack ramp up duration in seconds.
+                    //     .setDecayDuration( 0.1 )      //  Decay ramp down duration in seconds.
+                    //     .setSustainGain( 0.6 )        //  Sustain gain level; percent of attackGain.
+                    //     .setSustainDuration( 1 )      //  Sustain duration in seconds -- normally Infinity.
+                    //     .setReleaseDuration( 0.1 )
+                
+                    // new Beep.Voice( this.note.hertz, this.audioContext )
+                    //     .setOscillatorType( 'triangle' )
+                    //     .setAttackGain( 0.02 )        //  0 = No gain. 1 = Full gain.
+                    //     .setAttackDuration( 0.08 )    //  Attack ramp up duration in seconds.
+                    //     .setDecayDuration( 0.1 )      //  Decay ramp down duration in seconds.
+                    //     .setSustainGain( 0.6 )        //  Sustain gain level; percent of attackGain.
+                    //     .setSustainDuration( 1 )      //  Sustain duration in seconds -- normally Infinity.
+                    //     .setReleaseDuration( 0.1 )
+                
+                    // new Beep.Voice( this.note.hertz, this.audioContext )
+                    //     .setOscillatorType( 'sawtooth' )
+                    //     .setAttackGain( 0.02 ),
+                
+                    // new Beep.Voice( this.note.hertz, this.audioContext )
+                    //     .setOscillatorType( 'square' )
+                    //     .setAttackGain( 0.03 )
+                )})
+                // window.synth.addStyleClass( 'rainbow' )
+                // window.synth.addStyleClass( 'mini' )
+            // add listener to button, console log to know working
+            document.getElementById("update_patch").addEventListener("click", function(e){
+                e.preventDefault();
+                console.log(e);
+                const formData = new FormData(document.getElementById('synth_form'));
+                data = {};
+                csrf_token = formData.get("csrfmiddlewaretoken");
+                //oscillator 1
+                data.oscillator1Ajax = formData.get('oscillator1_form');
+                data.octave1Ajax = formData.get('octave1_form');
+                data.attackGain1Ajax = formData.get('attackGain1_form');
+                data.attackDur1Ajax = formData.get('attackDur1_form');
+                data.decayDur1Ajax = formData.get('decayDur1_form');
+                data.sustainGain1Ajax = formData.get('sustainGain1_form');
+                data.sustainDur1Ajax = formData.get('sustainDur1_form');
+                data.release1Ajax = formData.get('release1_form');
+                //oscillator 2
+                data.oscillator2Ajax = formData.get('oscillator2_form');
+                data.octave2Ajax = formData.get('octave2_form');
+                data.attackGain2Ajax = formData.get('attackGain2_form');
+                data.attackDur2Ajax = formData.get('attackDur2_form');
+                data.decayDur2Ajax = formData.get('decayDur2_form');
+                data.sustainGain2Ajax = formData.get('sustainGain2_form');
+                data.sustainDur2Ajax = formData.get('sustainDur2_form');
+                data.release2Ajax = formData.get('release2_form');
+                
+                console.log(data);
+                console.log(csrf_token);
+                // fetch('url') //change to post and send JSON object, make sure relative and not local host
+                //     .then(function(data){
+                //         console.log(data)
+                //     })
+                // get errors to appear on this page
+                fetch('/synth/update', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'X-CSRFToken': csrf_token,
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    window.location.assign('/synth');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            })
+            // prevent form default x
+            // read form data x
+            // AJAX to server route - fetch API
+            });
+        </script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+    </head>
+    <body>
+        <div class="notes">
+            <header>
+                <a href="/logout"><Button>Log Out</Button></a>
+                <a href="/dashboard"><Button>All Patches</Button></a>
+            </header>
+            <p>Attack Gain is measured as is percentage of the maximum possible output (1 is max value)</p>
+            <p>Sustain Gain is measured as is percentage of the Attack Gain level (1 is max value)</p>
+            <p>Duration is measured in seconds</p>
+        </div>
+        <div class="inputs">
+            <form action="/synth/create" id="synth_form" method="POST">
+                {% csrf_token %}
+                <div class="both_osc">
+                    <div class="oscillator_1">
+                        Oscillator 1:
+                        <select name="oscillator1_form" value='{{oscillator1}}'>
+                            <option value='{{oscillator1}}' selected hidden> 
+                                {{oscillator1}}
+                            </option>
+                            <option value="square">Square Wave</option>
+                            <option value="sine">Sine Wave</option>
+                            <option value="sawtooth">Sawtooth Wave</option>
+                            <option value="triangle">Triangle Wave</option>
+                        </select>
+                        Octave:
+                        <select name="octave1_form" value='{{octave1}}'>
+                            <option value='{{octave1}}' selected hidden> 
+                                {{octave1}}
+                            </option>
+                            <option value= '1'>Standard</option>
+                            <option value= '2'>Octave Above</option>
+                            <option value= '4'>2 Octaves Above</option>
+                            <option value= '0.5'>Octave Below</option>
+                            <option value= '0.25'>2 Octaves Below</option>
+                        </select>
+                        <div class="attack">
+                            <div class="gain">
+                                Attack Gain: <input type="number" step=0.01 name="attackGain1_form" min='0' max='1' value={{attackGain1}}>
+                            </div>
+                            <div class="dur">
+                                Attack Duration: <input type="number" step=0.01 name="attackDur1_form" min='0' max='999' value={{attackDur1}}>
+                            </div>
+                        </div>
+                        Decay Duration: <input type="number" step=0.01 name="decayDur1_form" min='0' max='999' value={{decayDur1}}>
+                        <div class="sustain">
+                            <div class="gain">
+                                Sustain Gain: <input type="number" step=0.01 name="sustainGain1_form" min='0' max='1' value={{sustainGain1}}>
+                            </div>
+                            <div class="dur">
+                                Sustain Duration: <input type="number" step=0.1 name="sustainDur1_form" min='0' max='9999' value={{sustainDur1}}>
+                            </div>
+                        </div>
+                        Release Duration: <input type="number" step=0.01 name="release1_form" min='0' max='999' value={{release1}}>
+                    </div>
+                    <div class="oscillator_2">
+                        Oscillator 2:
+                        <select name="oscillator2_form">
+                            <option value='{{oscillator2}}' selected hidden> 
+                                {{oscillator2}}
+                            </option>
+                            <option value="square">Square Wave</option>
+                            <option value="sine">Sine Wave</option>
+                            <option value="sawtooth">Sawtooth Wave</option>
+                            <option value="triangle">Triangle Wave</option>
+                        </select>
+                        Octave:
+                        <select name="octave2_form" value='{{octave2}}'>
+                            <option value='{{octave2}}' selected hidden> 
+                                {{octave2}}
+                            </option>
+                            <option value= '1'>Standard</option>
+                            <option value= '2'>Octave Above</option>
+                            <option value= '4'>2 Octaves Above</option>
+                            <option value= '0.5'>Octave Below</option>
+                            <option value= '0.25'>2 Octaves Below</option>
+                        </select>
+                        <div class="attack">
+                            <div class="gain">
+                                Attack Gain: <input type="number" step=0.01 name="attackGain2_form" min='0' max='1' value={{attackGain2}}>
+                            </div>
+                            <div class="dur">
+                                Attack Duration: <input type="number" step=0.01 name="attackDur2_form" min='0' max='999' value={{attackDur2}}>
+                            </div>
+                        </div>
+                        Decay Duration: <input type="number" step=0.01 name="decayDur2_form" min='0' max='999' value={{decayDur2}}>
+                        <div class="sustain">
+                            <div class="gain">
+                                Sustain Gain: <input type="number" step=0.01 name="sustainGain2_form" min='0' max='1' value={{sustainGain2}}>
+                            </div>
+                            <div class="dur">
+                                Sustain Duration: <input type="number" step=0.1 name="sustainDur2_form" min='0' max='9999' value={{sustainDur2}}>
+                            </div>
+                        </div>
+                        Release Duration: <input type="number" step=0.01 name="release2_form" min='0' max='999' value={{release2}}>
+                    </div>
+                </div>
+                <div class="center_content">
+                    <button type="submit" id="update_patch">Load Changes</button>
+                </div>
+                <div class="center_content">
+                    <input type="text" name="patch_name_form" placeholder="insert patch name">
+                </div>
+                <div class="center_content">
+                    <button type="submit" id="save_patch">Save Patch</button>
+                </div>
+                <errors>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </errors>
+            </form>
+            <!-- <form action="synth/load" method="POST">
+                {% csrf_token %}
+                <div class="center_content">
+                    Load a Patch:
+                </div>
+                <div class="center_content">
+                    <select name="patch_to_load">
+                        {% for patch in all_patches %}
+                            {% if patch.uploaded_by.id == selected_user.id %}
+                            <option value="{{patch.id}}">{{patch.patch_name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="center_content">
+                    <button type="submit">Load Patch</button>
+                </div> -->
+            </form>
+            <div class="center_content">
+                <p>Patches:</p>
+            </div>
+            <div class="center_content">
+                <div class="table_wrap">
+                    <table>
+                        {% for patch in all_patches %}
+                            <tr>
+                                    {% if patch.uploaded_by.id == selected_user.id %}
+                                    <td>{{patch.patch_name}}</td>
+                                    <td><a href="/synth/load/{{patch.id}}"><button>Load</button></a></td>
+                                    <td><a href="/synth/destroy/{{patch.id}}"><button>Delete</button></a></td>
+                                    {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

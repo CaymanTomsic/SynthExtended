@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+    body{
+        background-color: #111;
+        width: 950px;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        margin: 20px auto;
+        align-items: center;
+        color: cyan;
+    }
+        .all_forms{
+            display: flex;
+            margin-top: 20px;
+        }
+            .register, .login{
+                border: darkorchid solid;
+                display: flex;
+                flex-direction: column;
+                margin-right: 20px;
+                padding: 10px;
+            }
+                form{
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 10px;
+                    align-items: center;
+                    text-align: left;
+                }
+                h3{
+                    text-align: center;
+                }
+                button{
+                    width: 100px;
+                }
+                .buttons{
+                    align-items: center;
+                    justify-content: center;
+                }

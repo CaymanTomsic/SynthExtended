@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Patches</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+</head>
+<body>
+    {% for user in all_users %}
+    <div class="center_content">
+        <h3>{{user.username}}'s Patches</h3>
+    </div>
+    <div class="center_content">
+        <div class="table_wrap">
+            <table>
+                {% for patch in user.patches.all %}
+                <tr>
+                        <td>{{patch.patch_name}}</td>
+                        <td><a href="/synth/load/{{patch.id}}"><button>Load</button></a></td>
+                        {% if patch.uploaded_by.id == selected_user.id %}
+                        <td><a href="/synth/destroy/{{patch.id}}"><button>Delete</button></a></td>
+                        {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+</html>

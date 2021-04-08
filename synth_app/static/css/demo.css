@@ -1,0 +1,199 @@
+@charset "utf-8";
+
+
+
+
+    /*************/
+   /*           */
+  /*   Fonts   */
+ /*           */
+/*************/
+
+
+/*
+
+    Yes, the following font file names and formats MUST BE CONTAINED IN QUOTES
+    otherwise Firefox will refuse to load them. Chrome? Safari? Opera? Totally fine.
+    Firefox loading backround-images using url() and no quotes? Totally fine.
+    It’s literally just the @font-face rules that Firefox needs quotes for. 
+
+*/
+
+
+/*  Ginger Thin (as LIGHTER)  */
+
+/* @font-face {
+
+    font-family: Ginger;
+    font-weight: 100;
+    font-style:  normal;
+    src: url( '../demo/fonts/ginger-thin.eot' );
+    src: url( '../demo/fonts/ginger-thin.eot?#iefix' ) format( 'embedded-opentype' ),
+         url( '../demo/fonts/ginger-thin.woff' ) format( 'woff' ),
+         url( '../demo/fonts/ginger-thin.ttf'  ) format( 'truetype' ),
+         url( '../demo/fonts/ginger-thin.svg#f37_ginger_thin' ) format( 'svg' );
+} */
+
+
+/*  Ginger Light (as NORMAL)  */
+/* 
+@font-face {
+
+    font-family: Ginger;
+    font-weight: normal;
+    font-style:  normal;
+    src: url( '../demo/fonts/ginger-light.eot' );
+    src: url( '../demo/fonts/ginger-light.eot?#iefix' ) format( 'embedded-opentype' ),
+         url( '../demo/fonts/ginger-light.woff' ) format( 'woff' ),
+         url( '../demo/fonts/ginger-light.ttf'  ) format( 'truetype' ),
+         url( '../demo/fonts/ginger-light.svg#f37_ginger_light' ) format( 'svg' );
+} */
+
+
+/*  Ginger Bold (as BOLD)  */
+
+/* @font-face {
+
+    font-family: Ginger;
+    font-weight: bold;
+    font-style:  normal;
+    src: url( '../demo/fonts/ginger-bold.eot' );
+    src: url( '../demo/fonts/ginger-bold.eot?#iefix' ) format( 'embedded-opentype' ),
+         url( '../demo/fonts/ginger-bold.woff' ) format( 'woff' ),
+         url( '../demo/fonts/ginger-bold.ttf'  ) format( 'truetype' ),
+         url( '../demo/fonts/ginger-bold.svg#f37_ginger_bold' ) format( 'svg' );
+} */
+
+
+
+
+    /***************/
+   /*             */
+  /*   General   */
+ /*             */
+/***************/
+
+* {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    body {
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        /* align-self: center; */
+        flex-direction: column;
+        margin:  0;
+        border:  0;
+        padding: 0;
+        background-color: #111;
+        color: cyan;
+        font-family: Ginger, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        text-align: center;
+        margin-bottom: 8em;
+    }
+
+@media all and ( min-aspect-ratio: 4/3 ){
+
+    html, body { font-size: 1.3333vh; }
+}
+@media all and ( max-aspect-ratio: 4/3 ){
+
+    html, body { font-size: 1vw; }
+}
+html, body {
+
+    width:  100%;
+    height: 100%;
+}
+
+.messages{
+    color: red;
+    list-style: none;
+}
+
+header{
+    padding: 1em 3em;
+    display: flex;
+    align-items: flex-start;
+}
+
+    header button{
+        background-color: cyan;
+        border-radius: 10px;
+    }
+
+    p{
+        margin-top: 10px;
+    }
+
+.inputs{
+    border: blueviolet solid;
+    border-radius: 10px;
+    padding: 1em;
+    width: 80%;
+    /* height: 50%; */
+}
+    .both_osc{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+        .oscillator_1{
+            margin: 10px 5em;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .oscillator_2{
+            margin: 10px 5em;
+            display: flex;
+            flex-direction: column;
+        }
+    .center_content{
+        display: flex;
+        margin-top: 10px;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+    }
+        .center_content input{
+            width: 10em;
+        }
+        .center_content button{
+            background-color: cyan;
+            border-radius: 10px;
+        }
+    input, select{
+        margin-top: 0.3em;
+        margin-bottom: 0.65em;
+        align-self: center;
+        border: darkorchid solid;
+        width: 50%;
+        border-radius: 10px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+    }
+        .attack, .sustain{
+            align-self: center;
+            display: flex;
+            flex-direction: row;
+        }
+            .gain, .dur{
+                display: flex;
+                flex-direction: column;
+                margin-right: 20px;
+            }
+            .gain input, .dur input{
+                width: 8em;
+            }
+
+            .table_wrap{
+                display: flex;
+                justify-content: center;
+                width: 20em;
+                height: 6em;
+                overflow:auto;
+            }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+    <title>Login and Registration</title>
+</head>
+<body>
+    <h1>Welcome! Sign in to start making music!</h1>
+    <div class="all_forms">
+        <div class="register">
+            <h3>Register:</h3>
+            <form action="/register" method="post">
+                {% csrf_token %}
+                Username: <input type="text" name="username_form">
+                Email: <input type="text" name="email_form">
+                Password: <input type="password" name="password_form">
+                Confirm Password: <input type="password" name="conPassword_form">
+                <div class="buttons">
+                    <button type="submit">Register</button>
+                </div>
+                <!-- when submit is clicked it will send it to the urls.py using "/register" -->
+            </form>
+        </div>
+        <div class="login">
+            <h3>Login:</h3>
+            <form action="/login" method="post">
+                {% csrf_token %} <!-- each time you crate a new form you need the csrf_token-->
+                Email: <input type="text" name="log_email_form">
+                Password: <input type="password" name="log_password_form">
+                <div class="buttons">
+                    <button type="submit">Login</button>
+                </div>
+                <!-- #when submit is clicked it will send it to the urls.py using "/login" -->
+            </form>
+        </div>
+    </div>
+    <!-- this is pasting the values in error dict -->
+    <errors>
+        {% if messages %}
+            <ul class="messages" style="color: red;">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </errors>
+</body>
+</html>

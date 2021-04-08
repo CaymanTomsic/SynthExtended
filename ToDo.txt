@@ -1,0 +1,28 @@
+User model - favorited (many to many), created(one to many) 
+preset model - favorited by(many to many), uploaded by(one to many)
+change update_button tags and css
+auto load values
+favorite option
+created and favorite patches load
+log in and register
+variables js
+*add oscillators
+save patch button
+user patches explore page, if not favorited, favorite instead of save - maybe. what if user changes a preset settings and wants to save uniquely (update button redirect?)
+remove space bar play functionality -  conflicts with patch naming
+double check all options
+want to save patch but different info is in form (i.e. accidentally change value but don't update then want to save)
+
+change tunings (beyond octave) with the voice multiplier on note
+fix select values with if statements
+
+make patch public
+remove from public
+edit patch
+delete patch
+
+test 1080
+change px to % or em
+
+add additional keys
+record functionality
